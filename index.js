@@ -15,6 +15,8 @@ const port = process.env.PORT || config.get("port");
 app.use(express.json({extended:false}));
 app.use(express.urlencoded({extended:false}));
 
+
+// GET request - Read by Id
 app.get("/:id", (req,res)=>{
     Form.find({email:req.params.id} ,(err,data)=>{
         if(err){
@@ -24,6 +26,7 @@ app.get("/:id", (req,res)=>{
     });
 });
 
+// GET request - Read all
 app.get("/", (req,res)=>{
     Form.find({} ,(err,data)=>{
         if(err){
@@ -33,7 +36,9 @@ app.get("/", (req,res)=>{
     });
 });
 
-app.post("/login", function(req,res){
+
+// POST request - Create
+app.post("/login",(req,res)=>{
     var newForm = new Form(req.body);
     newForm.save((err)=>{
         if(err){
@@ -43,6 +48,8 @@ app.post("/login", function(req,res){
     });
 });
 
+
+// PUT request - Update by passing Id
 app.put("/:id",(req,res)=>{
     Form.findById(req.params.id , (err,newForm)=>{
         if(err)
@@ -58,6 +65,8 @@ app.put("/:id",(req,res)=>{
         });     
 });
 
+
+// DELETE request - Delete by passing Id 
 app.delete("/:id",(req,res)=>{
     Form.findByIdAndRemove(req.params.id, (err)=>{
         if(err){
@@ -67,6 +76,7 @@ app.delete("/:id",(req,res)=>{
     });
 });
 
+// DELETE request - Delete all
 app.delete("/",(req,res)=>{
     Form.remove({}, (err)=>{
         if(err){
